@@ -1,68 +1,85 @@
-
-
 header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
+  background-color: #181f27;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
 }
 
+/* Gaya judul halaman beranda */
 h1 {
-    font-size: 36px;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    justify-content: space-between;
-}
-
-p {
-    font-size: 18px;
-}
-
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #0074d9;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.button:hover {
-    background-color: #0056b3;
+  font-size: 2.5rem;
 }
 
 
-  .product-card {
-    margin-bottom: 20px;
-  }
+ul li {
+  margin: 0 10px;
+  cursor: pointer;
+}
+.product-title {
+  font-size: 1.25rem;
+}
 
-  .product-image {
-    max-width: 100%;
-    height: auto;
-  }
+.product-description {
+  font-size: 1rem;
+}
 
-  .product-details {
-    padding: 20px;
-  }
+.product-price, .product-stock {
+  font-size: 0.875rem;
+}
 
-  .product-title {
-    font-size: 18px;
-    font-weight: bold;
-  }
+/* Warna pagination */
+.pagination .page-link {
+  background-color: #007bff;
+  color: #2b0909;
 
-  .product-description {
-    margin-top: 10px;
-  }
+}
 
-  .product-price {
-    font-size: 16px;
-    color: #007BFF;
-  }
+.pagination .page-item.disabled .page-link {
+  background-color: #f8f9fa;
+  color: #333;
+}
 
-  .product-stock {
-    margin-top: 10px;
-  }
+
+.custom-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.custom-list {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+}
+
+.custom-list li {
+  display: inline;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.card-body{
+  color: black;
+}
+
+
+/* CSS Tambahan */
+.d-flex {
+  display: flex;
+}
+
+/* Elemen "Sorting" */
+.p-2:nth-child(1) ul {
+  background-color: #3498db; /* Warna latar belakang Sorting */
+  color: white; /* Warna teks Sorting */
+  padding: 10px;
+  border: 1px solid #2980b9; /* Gaya border Sorting */
+}
+
+/* Elemen "Filter" */
+.p-2:nth-child(2) ul {
+  background-color: #e74c3c; /* Warna latar belakang Filter */
+  color: white; /* Warna teks Filter */
+  padding: 10px;
+  border: 1px solid #c0392b; /* Gaya border Filter */
+}
