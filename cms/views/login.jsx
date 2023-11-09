@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -15,13 +16,22 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3000/login", {
+      const { data } = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
-
+      console.log(data);
+      //   dapatkan access_token
+      //   const access_token = data.access_token;
+      //   console.log(access_token);
+      // simpan dalam localstorage
+      //   const headers = data.headers;
+      //   console.log(headers);
+      localStorage.setItem("access_token", data.access_token);
+      navigate("/product");
       // Handle the login success here, e.g., store the user's token and redirect.
     } catch (error) {
+      console.log(error.data.message);
       setError(error);
     } finally {
       setIsLoading(false);
@@ -67,13 +77,17 @@ const Login = () => {
                   />
                 </div>
                 <div className="d-grid gap-2">
-                  <button className="btn btn-primary" type="submit">
+                  <button
+                    onClick={handleSubmit}
+                    className="btn btn-primary"
+                    type="submit"
+                  >
                     Login
-                    {isLoading ? "Logging in..." : "Login"}
+                    {/* {isLoading ? "Logging in..." : "Login"} */}
                   </button>
                 </div>
               </form>
-              {error && <p>Login failed. Please check your credentials.</p>}
+              {/* {error && <p>Login failed. Please check your credentials.</p>} */}
             </div>
           </div>
         </div>
