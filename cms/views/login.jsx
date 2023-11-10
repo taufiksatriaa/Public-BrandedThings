@@ -20,80 +20,77 @@ const Login = () => {
         email,
         password,
       });
-      console.log(data);
+      //   console.log(data);
       //   dapatkan access_token
-      //   const access_token = data.access_token;
-      //   console.log(access_token);
       // simpan dalam localstorage
-      //   const headers = data.headers;
-      //   console.log(headers);
+
       localStorage.setItem("access_token", data.access_token);
-      navigate("/product");
+      navigate("/");
       // Handle the login success here, e.g., store the user's token and redirect.
     } catch (error) {
-      console.log(error.data.message);
+      //   console.log(error.data.message);
       setError(error);
     } finally {
       setIsLoading(false);
     }
   };
-
-  return (
-    <>
-      <section>
-        <div
-          id="form-login"
-          className="d-flex justify-content-center align-items-center bg-secondary bg-gradient"
-          style={{ height: "100vh" }}
-        >
+  //   if (isLoading) return <p>Loading....</p>;
+  //   if (error) return <p>Error fetching, please try again later</p>;
+  {
+    return (
+      <>
+        <section>
           <div
-            className="card card text-dark bg-light mb-3"
-            style={{ width: "18rem" }}
+            id="form-login"
+            className="d-flex justify-content-center align-items-center bg-secondary bg-gradient"
+            style={{ height: "100vh" }}
           >
-            <div className="card-body">
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <div className="d-grid gap-2">
-                  <button
-                    onClick={handleSubmit}
-                    className="btn btn-primary"
-                    type="submit"
-                  >
-                    Login
-                    {/* {isLoading ? "Logging in..." : "Login"} */}
-                  </button>
-                </div>
-              </form>
-              {/* {error && <p>Login failed. Please check your credentials.</p>} */}
+            <div
+              className="card card text-dark bg-light mb-3"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-body">
+                <form>
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="password" className="form-label">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className="d-grid gap-2">
+                    <button
+                      onClick={handleSubmit}
+                      className="btn btn-primary"
+                      type="submit"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </>
-  );
+        </section>
+      </>
+    );
+  }
 };
-
 export default Login;

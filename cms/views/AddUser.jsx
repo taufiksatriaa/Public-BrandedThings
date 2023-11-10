@@ -1,4 +1,46 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const AddUser = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // console.log(categoryId, "iniii");
+      setIsLoading(true);
+      const access_token = localStorage.getItem("access_token");
+      const { data } = await axios.post(
+        "http://localhost:3000/add-user",
+        {
+          username,
+          email,
+          password,
+          phoneNumber,
+          address,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+      // const name = data.name;
+      // console.log("berhasil nambahi");
+      navigate(`/`);
+    } catch (error) {
+      setError(error);
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       <section
@@ -20,6 +62,8 @@ const AddUser = () => {
                         className="form-control"
                         name="username"
                         id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                       />
                     </div>
                     <div className="form-group">
@@ -29,6 +73,8 @@ const AddUser = () => {
                         className="form-control"
                         name="email"
                         id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
                     <div className="form-group">
@@ -38,6 +84,8 @@ const AddUser = () => {
                         className="form-control"
                         name="password"
                         id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     </div>
                     <div className="form-group">
@@ -47,6 +95,8 @@ const AddUser = () => {
                         className="form-control"
                         name="phoneNumber"
                         id="phoneNumber"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                       />
                     </div>
                     <div className="form-group">
@@ -56,10 +106,16 @@ const AddUser = () => {
                         name="address"
                         id="address"
                         rows="4"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
                       ></input>
                     </div>
                     <div className="d-grid gap-2">
-                      <button className="btn btn-primary" type="button">
+                      <button
+                        onClick={handleSubmit}
+                        className="btn btn-primary"
+                        type="button"
+                      >
                         Add User
                       </button>
                     </div>

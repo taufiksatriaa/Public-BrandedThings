@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <>
@@ -25,32 +27,29 @@ const Navbar = () => {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">
+                  <Link
+                    to={"/"}
+                    className="nav-link active"
+                    aria-current="page"
+                    href="#"
+                  >
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="nav-link active" href="">
+                  <Link to={"/add-user"} className="nav-link active">
                     Add Staff
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="nav-link active" href="">
+                  <Link to={"/category"} className="nav-link active">
                     Category
-                  </a>
+                  </Link>
                 </li>
               </ul>
-              <form class="d-flex">
-                <input
-                  class="form-control me-1"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button class="btn btn-danger" type="submit">
-                  Logout
-                </button>
-              </form>
+              <button class="btn btn-danger" type="submit">
+                Logout
+              </button>
             </div>
           </div>
         </nav>

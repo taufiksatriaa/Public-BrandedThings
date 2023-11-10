@@ -1,31 +1,28 @@
 import { useEffect, useState } from "react";
 import Navbar from "../src/Components/Navbar";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import Button from "../src/Components/Button";
+// import AddProduct from "./FormAddProduct";
 const HomeCms = () => {
   //  musti dapatin get localstorage dulu
-  const access_token = localStorage.getItem("access_token");
-  //  validasi
-  if (!access_token) {
-    console.log("Access token is missing");
-    // kalau ada jangan lupa di return
-    return;
-  }
   const Branded_Things_Url = "http://localhost:3000/";
   const BrandedApi = axios.create({
     baseURL: Branded_Things_Url,
   });
-  console.log(BrandedApi, "inii");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // console.log(Headers);
     async function fetchApi() {
       try {
+        const access_token = localStorage.getItem("access_token");
         setIsLoading(true);
 
         const { data } = await BrandedApi.get("/product", {
-          //  masukin di argumen ke dua
+          //!  masukin di argumen ke dua
           headers: {
             Authorization: `Bearer ${access_token}`, // Set the Authorization header
           },
@@ -33,7 +30,7 @@ const HomeCms = () => {
         // console.log(data, "iniii");
         setData(data.product);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
         setError(error);
       } finally {
         setIsLoading(false);
@@ -41,17 +38,27 @@ const HomeCms = () => {
     }
     fetchApi();
   }, []);
+  const handleAddProductClick = () => {
+    // Navigate to the '/add-product' route
+    navigate("/product");
+  };
+  // const navigate = useNavigate();
+  const handleClick = (id) => {
+    navigate(`product/${id}`);
+  };
   if (isLoading) return <p>Loading....</p>;
   if (error) return <p>Error fetching, please try again later</p>;
   // console.log(error);
-  console.log(data, "ini data");
+  // console.log(data, "ini data");
   return (
     <>
       {/* navbar */}
       <Navbar />
       {/* <!-- Tombol "Add Product" --> */}
-      <div class="d-flex justify-content-center">
-        <button class="btn btn-primary mt-3">Add Product</button>
+      <div className="d-flex justify-content-center">
+        <button onClick={handleAddProductClick} class="btn btn-primary mt-3">
+          Add Product
+        </button>
       </div>
       {/* <!-- Table --> */}
       <section>
@@ -63,9 +70,9 @@ const HomeCms = () => {
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
+                <th>Stock</th>
                 <th>Image</th>
                 <th>Category</th>
-                <th>Author</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -77,6 +84,7 @@ const HomeCms = () => {
                     <td>{product.name}</td>
                     <td>{product.description}</td>
                     <td>Rp. {product.price}</td>
+                    <td>{product.stock}</td>
                     <td>
                       <img
                         src={product.imgUrl}
@@ -85,25 +93,19 @@ const HomeCms = () => {
                       />
                     </td>
                     <td>{product.Category.name}</td>
-                    <td></td>
+
                     <td>
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        href=""
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        href=""
-                      >
-                        Update Image
-                      </button>
-                      <button type="button" className="btn btn-danger" href="">
-                        Delete
-                      </button>
+                      <div className="d-flex">
+                        <button
+                          key={product.id}
+                          onClick={() => {
+                            handleClick(product.id);
+                          }}
+                          className="btn btn-warning mr-2"
+                        >
+                          See Detail
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );
