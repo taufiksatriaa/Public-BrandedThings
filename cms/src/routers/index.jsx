@@ -5,21 +5,22 @@ import Login from "../../views/login";
 import AddUser from "../../views/AddUser";
 import CategoryHome from "../../views/CategoryTable";
 import Detail from "../../views/Detail";
+import EditProduct from "../../views/FormEditProduct";
 const router = createBrowserRouter([
   {
     // //  hidupin ini kalau sudah ada tombol logout
-    // loader: () => {
-    //   // harus me-return sesuatu kalau gak null
-    //   // navigation guard
-    //   // apa tanda dia belum login
-    //   const access_token = localStorage.getItem("access_token");
-    //   // cek access token
-    //   if (access_token) {
-    //     return redirect("/");
-    //   }
-    //   //  kalau access token ada return null artinya lanjutkan
-    //   return null;
-    // },
+    loader: () => {
+      // harus me-return sesuatu kalau gak null
+      // navigation guard
+      // apa tanda dia belum login
+      const access_token = localStorage.getItem("access_token");
+      // cek access token
+      if (access_token) {
+        return redirect("/");
+      }
+      //  kalau access token ada return null artinya lanjutkan
+      return null;
+    },
     path: "/login",
     element: <Login />,
   },
@@ -44,13 +45,18 @@ const router = createBrowserRouter([
   },
   {
     //  nambahkan product
-    path: "/Product",
+    path: "/",
     element: <AddProduct />,
   },
   {
-    path: "/product/:productId",
+    path: "/:productId",
     element: <Detail />,
   },
+  {
+    path: "/:productId/editProduct",
+    element: <EditProduct />,
+  },
+
   {
     //  nambahkan staff
     path: "/add-user",

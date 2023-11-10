@@ -1,6 +1,15 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    // Lakukan sesuatu, misalnya menghapus token dari local storage
+    const access_token = localStorage.removeItem("access_token");
+    console.log(access_token);
+    // Redirect ke halaman login atau halaman lain sesuai kebutuhan
+    navigate("/login");
+  };
+
   return (
     <>
       <section>
@@ -47,7 +56,11 @@ const Navbar = () => {
                   </Link>
                 </li>
               </ul>
-              <button class="btn btn-danger" type="submit">
+              <button
+                onClick={handleLogout}
+                className="btn btn-danger"
+                type="submit"
+              >
                 Logout
               </button>
             </div>

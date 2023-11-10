@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-
+import { useParams, Link, useNavigate } from "react-router-dom";
+import Button from "../src/Components/Button";
 const Detail = () => {
   const { productId } = useParams();
-  console.log(productId);
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [product, setProduct] = useState([]);
@@ -32,6 +32,12 @@ const Detail = () => {
     }
     fetchProduct();
   }, []);
+
+  // const handleEditIProduct = (id) => {
+  //   // Logika untuk meng-handle edit image
+  //   navigate(`/${id}/editProduct`);
+  // };
+
   return (
     <>
       {
@@ -91,9 +97,13 @@ const Detail = () => {
                       </div>
                     </div>
                     <div className="d-flex">
-                      <button className="btn btn-primary border border-secondary py-2 icon-hover px-3 mb-2">
+                      {/* <Button onClick={handleEditIProduct} /> */}
+                      {/* <button
+                        onClick={(e) => {}}
+                        className="btn btn-primary border border-secondary py-2 icon-hover px-3 mb-2"
+                      >
                         Edit
-                      </button>
+                      </button> */}
                       <button className="btn btn-secondary border border-secondary py-2 icon-hover px-3 mb-2">
                         Edit Image
                       </button>

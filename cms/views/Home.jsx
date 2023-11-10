@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../src/Components/Navbar";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import Button from "../src/Components/Button";
+// import Button from "../src/Components/Button";
 // import AddProduct from "./FormAddProduct";
 const HomeCms = () => {
   //  musti dapatin get localstorage dulu
@@ -44,7 +44,7 @@ const HomeCms = () => {
   };
   // const navigate = useNavigate();
   const handleClick = (id) => {
-    navigate(`product/${id}`);
+    navigate(`/${id}`);
   };
   if (isLoading) return <p>Loading....</p>;
   if (error) return <p>Error fetching, please try again later</p>;
@@ -61,17 +61,17 @@ const HomeCms = () => {
         </button>
       </div>
       {/* <!-- Table --> */}
-      <section>
+      <section className="container mt-4">
         <div className="d-flex justify-content-center mt-3">
           <table className="table table-striped">
             <thead>
               <tr>
                 <th>No</th>
                 <th>Name</th>
+                <th>Image</th>
                 <th>Description</th>
                 <th>Price</th>
                 <th>Stock</th>
-                <th>Image</th>
                 <th>Category</th>
                 <th>Action</th>
               </tr>
@@ -82,9 +82,6 @@ const HomeCms = () => {
                   <tr key={product.id}>
                     <td>{index + 1}</td>
                     <td>{product.name}</td>
-                    <td>{product.description}</td>
-                    <td>Rp. {product.price}</td>
-                    <td>{product.stock}</td>
                     <td>
                       <img
                         src={product.imgUrl}
@@ -92,6 +89,10 @@ const HomeCms = () => {
                         style={{ width: "100px", height: "auto" }}
                       />
                     </td>
+                    <td style={{ height: "auto" }}>{product.description}</td>
+                    <td>Rp. {product.price}</td>
+                    <td>{product.stock}</td>
+
                     <td>{product.Category.name}</td>
 
                     <td>
