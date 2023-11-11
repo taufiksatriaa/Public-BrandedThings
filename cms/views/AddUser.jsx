@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { urlName } from "../src/static";
 const AddUser = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ const AddUser = () => {
       setIsLoading(true);
       const access_token = localStorage.getItem("access_token");
       const { data } = await axios.post(
-        "http://localhost:3000/add-user",
+        `${urlName}add-user`,
         {
           username,
           email,

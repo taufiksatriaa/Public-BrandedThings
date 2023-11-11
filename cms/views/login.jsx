@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { urlName } from "../src/static";
+// urlName;
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -16,14 +18,14 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await axios.post("http://localhost:3000/login", {
+      const { data } = await axios.post(`${urlName}login`, {
         email,
         password,
       });
       //   console.log(data);
       //   dapatkan access_token
       // simpan dalam localstorage
-      console.log("behasil login");
+      // console.log("behasil login");
       localStorage.setItem("access_token", data.access_token);
       navigate("/");
       // Handle the login success here, e.g., store the user's token and redirect.

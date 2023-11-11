@@ -106,8 +106,8 @@ Silahkan Implementasikan routing pada aplikasi client kalian.
 
 - [ ] Public site
   - [ ] Halaman Home/Landing Page
-  - [ ] Halaman Detail
-- [ ] CMS site
+  - [V] Halaman Detail
+- [V] CMS site
   - [ ] Halaman Login
   - [ ] Halaman list entitas utama
   - [ ] Halaman create entitas utama (boleh menggunakan modal)

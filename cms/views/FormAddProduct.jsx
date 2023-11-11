@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Form from "../src/Components/Form";
+import { urlName } from "../src/static";
 
 const AddProduct = () => {
   const access_token = localStorage.getItem("access_token");
@@ -21,7 +22,7 @@ const AddProduct = () => {
     async function fetchCategory() {
       try {
         setIsLoading(true);
-        let { data } = await axios.get("http://localhost:3000/category", {
+        let { data } = await axios.get(`${urlName}category`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
@@ -40,7 +41,7 @@ const AddProduct = () => {
     try {
       setIsLoading(true);
       await axios.post(
-        "http://localhost:3000/product",
+        `${urlName}product`,
         {
           name,
           description,
@@ -55,6 +56,7 @@ const AddProduct = () => {
           },
         }
       );
+      console.log("berhasil nambahiii");
       navigate("/");
     } catch (error) {
       setError(error);

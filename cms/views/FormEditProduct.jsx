@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Form from "../src/Components/Form";
+import { urlName } from "../src/static";
 
 const EditProduct = () => {
   const { productId } = useParams();
@@ -22,14 +23,11 @@ const EditProduct = () => {
     async function fetchProductById() {
       try {
         setIsLoading(true);
-        let { data } = await axios.get(
-          `http://localhost:3000/product/${productId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${access_token}`,
-            },
-          }
-        );
+        let { data } = await axios.get(`${urlName}product/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
         setProduct(data.product);
         setName(data.product.name);
         setDescription(data.product.description);
@@ -45,7 +43,7 @@ const EditProduct = () => {
     async function fetchCategory() {
       try {
         setIsLoading(true);
-        let { data } = await axios.get("http://localhost:3000/category", {
+        let { data } = await axios.get(`${urlName}category`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
@@ -66,7 +64,7 @@ const EditProduct = () => {
       setIsLoading(true);
       const access_token = localStorage.getItem("access_token");
       await axios.put(
-        `http://localhost:3000/product/${product.id}`,
+        `${urlName}product/${product.id}`,
         {
           name,
           description,

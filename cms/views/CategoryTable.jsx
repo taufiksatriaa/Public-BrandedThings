@@ -3,6 +3,7 @@ import Navbar from "../src/Components/Navbar";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { urlName } from "../src/static";
 const CategoryHome = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +15,7 @@ const CategoryHome = () => {
         const access_token = localStorage.getItem("access_token");
         setIsLoading(true);
 
-        let data = await axios.get("http://localhost:3000/category", {
+        let data = await axios.get(`${urlName}category`, {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReusableButton from "../src/Components/ReusableButton";
+import { urlName } from "../src/static";
 const EditImage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
@@ -20,7 +21,7 @@ const EditImage = () => {
       formData.append("imgUrl", imageFile);
 
       const response = await axios.patch(
-        `http://localhost:3000/product/${productId}`,
+        `${urlName}product/${productId}`,
         formData,
         {
           headers: {

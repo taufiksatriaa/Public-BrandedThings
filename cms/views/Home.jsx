@@ -2,24 +2,19 @@ import { useEffect, useState } from "react";
 import Navbar from "../src/Components/Navbar";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import Login from "./login";
-
+import { urlName } from "../src/static";
+// import Login from "./login";
 const HomeCms = () => {
-  const Branded_Things_Url = "http://localhost:3000/";
-  const BrandedApi = axios.create({
-    baseURL: Branded_Things_Url,
-  });
-  const access_token = localStorage.getItem("access_token");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const access_token = localStorage.getItem("access_token");
   useEffect(() => {
     async function fetchApi() {
       try {
         setIsLoading(true);
-
-        const { data } = await BrandedApi.get("/product", {
+        const { data } = await axios.get("https://server.taufik.xyz/product", {
           //!  masukin di argumen ke dua
           headers: {
             Authorization: `Bearer ${access_token}`, // Set the Authorization header
@@ -28,7 +23,7 @@ const HomeCms = () => {
         // console.log(data, "iniii");
         setData(data.product);
       } catch (error) {
-        // console.log(error.message);
+        console.log(error.message);
         setError(error);
       } finally {
         setIsLoading(false);
@@ -54,12 +49,12 @@ const HomeCms = () => {
     // console.log(productId, "iniii");
     try {
       setIsLoading(true);
-      await BrandedApi.delete(`product/${productId}`, {
+      await axios.delete(`${urlName}product/${productId}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      const { data } = await BrandedApi.get("/product", {
+      const { data } = await axios.get(`${urlName}product`, {
         //!  masukin di argumen ke dua
         headers: {
           Authorization: `Bearer ${access_token}`, // Set the Authorization header
