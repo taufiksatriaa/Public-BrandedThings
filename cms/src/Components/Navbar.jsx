@@ -20,7 +20,7 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-light bg-secondary">
           <div className="container-fluid">
             <Link to={"/"} className="navbar-brand">
-              Branded Things
+              EraSmartPhonelah
             </Link>
             <button
               className="navbar-toggler"

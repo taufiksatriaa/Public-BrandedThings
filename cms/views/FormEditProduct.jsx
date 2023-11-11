@@ -17,7 +17,7 @@ const EditProduct = () => {
   const [product, setProduct] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  //  fetch si product berdasarkan id
   useEffect(() => {
     async function fetchProductById() {
       try {
@@ -41,6 +41,7 @@ const EditProduct = () => {
         setError(error);
       }
     }
+    // fetch si category
     async function fetchCategory() {
       try {
         setIsLoading(true);
@@ -58,6 +59,7 @@ const EditProduct = () => {
     }
     fetchProductById(), fetchCategory();
   }, []);
+  // handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
