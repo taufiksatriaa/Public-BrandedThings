@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 const Navbar = () => {
   const navigate = useNavigate();
+
   const handleLogout = () => {
     // Lakukan sesuatu, misalnya menghapus token dari local storage
-    const access_token = localStorage.removeItem("access_token");
-    console.log(access_token);
+    localStorage.removeItem("access_token");
     // Redirect ke halaman login atau halaman lain sesuai kebutuhan
     navigate("/login");
   };
@@ -13,12 +14,14 @@ const Navbar = () => {
   return (
     <>
       <section>
-        <div className="d-flex flex-column align-items-center bg-secondary bg-gradient"></div>
+        <div className="d-flex flex-column align-items-center bg-secondary bg-gradient">
+          {/* Add any additional content or styling here */}
+        </div>
         <nav className="navbar navbar-expand-lg navbar-light bg-secondary">
           <div className="container-fluid">
-            <a className="navbar-brand" href="#">
+            <Link to={"/"} className="navbar-brand">
               Branded Things
-            </a>
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -36,22 +39,17 @@ const Navbar = () => {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link
-                    to={"/"}
-                    className="nav-link active"
-                    aria-current="page"
-                    href="#"
-                  >
+                  <Link to={"/"} className="nav-link active">
                     Home
                   </Link>
                 </li>
-                <li>
-                  <Link to={"/add-user"} className="nav-link active">
+                <li className="nav-item">
+                  <Link to={"/add-user"} className="nav-link">
                     Add Staff
                   </Link>
                 </li>
-                <li>
-                  <Link to={"/category"} className="nav-link active">
+                <li className="nav-item">
+                  <Link to={"/category"} className="nav-link">
                     Category
                   </Link>
                 </li>
@@ -59,7 +57,7 @@ const Navbar = () => {
               <button
                 onClick={handleLogout}
                 className="btn btn-danger"
-                type="submit"
+                type="button"
               >
                 Logout
               </button>

@@ -1,119 +1,127 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Form from "../src/Components/Form";
+
 const EditProduct = () => {
+  const { productId } = useParams();
+  const access_token = localStorage.getItem("access_token");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [category, setCategory] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [product, setProduct] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchProductById() {
+      try {
+        setIsLoading(true);
+        let { data } = await axios.get(
+          `http://localhost:3000/product/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        setProduct(data.product);
+        setName(data.product.name);
+        setDescription(data.product.description);
+        setPrice(data.product.price);
+        setStock(data.product.stock);
+        setImgUrl(data.product.imgUrl);
+        setCategoryId(data.product.categoryId);
+      } catch (error) {
+        setError(error);
+      }
+    }
+    async function fetchCategory() {
+      try {
+        setIsLoading(true);
+        let { data } = await axios.get("http://localhost:3000/category", {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
+        setCategory(data.category);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchProductById(), fetchCategory();
+  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      const access_token = localStorage.getItem("access_token");
+      await axios.put(
+        `http://localhost:3000/product/${product.id}`,
+        {
+          name,
+          description,
+          price,
+          stock,
+          imgUrl,
+          categoryId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+      navigate("/");
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) return <p>Loading....</p>;
+  if (error) return <p>Error fetching, please try again later</p>;
+
   return (
-    <>
-      <div className="container mt-4">
-        <section
-          id="form-AddProduct"
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "100vh" }}
-        >
-          <div className="container">
-            <h1>Edit Product</h1>
-            <div className="card">
-              <div className="card-body">
-                <form action="process-add-product.php" method="POST">
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-label">
-                      Product Name
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      name="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="description" className="form-label">
-                      Description
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id="description"
-                      name="description"
-                      value={description}
-                      onChange={(e) => {
-                        setDescription(e.target.value);
-                      }}
-                    ></textarea>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="price" className="form-label">
-                      Price
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="price"
-                      name="price"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="stock" className="form-label">
-                      Stock
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="stock"
-                      name="stock"
-                      value={stock}
-                      onChange={(e) => setStock(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="imgUrl" className="form-label">
-                      Image URL
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="imgUrl"
-                      name="imgUrl"
-                      value={imgUrl}
-                      onChange={(e) => setImgUrl(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="categoryId" className="form-label">
-                      Category
-                    </label>
-                    {/* <select
-                      name="categoryId"
-                      className="form-control"
-                      id="categoryId"
-                      onChange={(e) => {
-                        setCategoryId(e.target.value);
-                      }}
-                    >
-                      {category.map((el) => {
-                        console.log(el.id);
-                        return (
-                          <option key={el.id} value={el.id}>
-                            {el.name}
-                          </option>
-                        );
-                      })}
-                    </select> */}
-                  </div>
-                  <button
-                    onClick={handleSubmit}
-                    type="submit"
-                    className="btn btn-primary"
-                  >
-                    Add Product
-                  </button>
-                </form>
-              </div>
+    <div className="container mt-4">
+      <section
+        id="form-EditProduct"
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="container">
+          <h1>Edit Product</h1>
+          <div className="card">
+            <div className="card-body">
+              <Form
+                name={name}
+                description={description}
+                price={price}
+                stock={stock}
+                imgUrl={imgUrl}
+                categoryId={categoryId}
+                category={category}
+                setName={setName}
+                setDescription={setDescription}
+                setPrice={setPrice}
+                setStock={setStock}
+                setImgUrl={setImgUrl}
+                setCategoryId={setCategoryId}
+                handleSubmit={handleSubmit}
+              />
             </div>
           </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+    </div>
   );
 };
 

@@ -2,23 +2,21 @@ import { useEffect, useState } from "react";
 import Navbar from "../src/Components/Navbar";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-// import Button from "../src/Components/Button";
-// import AddProduct from "./FormAddProduct";
+import Login from "./login";
+
 const HomeCms = () => {
-  //  musti dapatin get localstorage dulu
   const Branded_Things_Url = "http://localhost:3000/";
   const BrandedApi = axios.create({
     baseURL: Branded_Things_Url,
   });
+  const access_token = localStorage.getItem("access_token");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-
   useEffect(() => {
     async function fetchApi() {
       try {
-        const access_token = localStorage.getItem("access_token");
         setIsLoading(true);
 
         const { data } = await BrandedApi.get("/product", {
@@ -38,18 +36,47 @@ const HomeCms = () => {
     }
     fetchApi();
   }, []);
+  // add Product
   const handleAddProductClick = () => {
-    // Navigate to the '/add-product' route
-    navigate("/product");
+    navigate("/addProduct");
   };
-  // const navigate = useNavigate();
-  const handleClick = (id) => {
-    navigate(`/${id}`);
+  // EditProduct
+  const handleEditProduct = (productId) => {
+    navigate(`/${productId}`);
   };
-  if (isLoading) return <p>Loading....</p>;
-  if (error) return <p>Error fetching, please try again later</p>;
-  // console.log(error);
-  // console.log(data, "ini data");
+  //
+  // uploadProduct
+  const handleEditImage = (productId) => {
+    navigate(`/${productId}/editImage`);
+  };
+  // delete
+  const handleDeleteProduct = async (productId) => {
+    // console.log(productId, "iniii");
+    try {
+      setIsLoading(true);
+      await BrandedApi.delete(`product/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      const { data } = await BrandedApi.get("/product", {
+        //!  masukin di argumen ke dua
+        headers: {
+          Authorization: `Bearer ${access_token}`, // Set the Authorization header
+        },
+      });
+      setData(data.product);
+      // console.log("berhasil hapus");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // if (error) return <p>Error fetching, please try again later</p>;
   return (
     <>
       {/* navbar */}
@@ -96,17 +123,45 @@ const HomeCms = () => {
                     <td>{product.Category.name}</td>
 
                     <td>
-                      <div className="d-flex">
+                      <td>
                         <button
-                          key={product.id}
-                          onClick={() => {
-                            handleClick(product.id);
+                          onClick={() => handleEditProduct(product.id)}
+                          data={data}
+                          style={{
+                            backgroundColor: "#28a745",
+                            color: "#ffffff",
+                            padding: "10px 20px",
+                            border: "none",
+                            borderRadius: "5px",
                           }}
-                          className="btn btn-warning mr-2"
                         >
-                          See Detail
+                          Edit
                         </button>
-                      </div>
+                        <button
+                          onClick={() => handleEditImage(product.id)}
+                          style={{
+                            backgroundColor: "#007bff",
+                            color: "#ffffff",
+                            padding: "10px 20px",
+                            border: "none",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          Upload Image
+                        </button>
+                        <button
+                          onClick={() => handleDeleteProduct(product.id)}
+                          style={{
+                            backgroundColor: "#dc3545",
+                            color: "#ffffff",
+                            padding: "10px 20px",
+                            border: "none",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </td>
                     </td>
                   </tr>
                 );

@@ -31,8 +31,7 @@ const AddUser = () => {
           },
         }
       );
-      // const name = data.name;
-      // console.log("berhasil nambahi");
+
       navigate(`/`);
     } catch (error) {
       setError(error);

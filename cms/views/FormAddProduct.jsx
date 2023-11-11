@@ -1,7 +1,12 @@
+import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+import Form from "../src/Components/Form";
+
 const AddProduct = () => {
+  const access_token = localStorage.getItem("access_token");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -13,23 +18,16 @@ const AddProduct = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
-    // console.log("heheheh");
     async function fetchCategory() {
       try {
-        console.log("hehehhe");
-        const access_token = localStorage.getItem("access_token");
         setIsLoading(true);
         let { data } = await axios.get("http://localhost:3000/category", {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
         });
-        // console.log(response);
         setCategory(data.category);
-
-        // console.log(data.category, "iniiii");
       } catch (error) {
-        console.log(error);
         setError(error);
       } finally {
         setIsLoading(false);
@@ -37,14 +35,11 @@ const AddProduct = () => {
     }
     fetchCategory();
   }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(categoryId, "iniii");
       setIsLoading(true);
-      const access_token = localStorage.getItem("access_token");
-      const { data } = await axios.post(
+      await axios.post(
         "http://localhost:3000/product",
         {
           name,
@@ -63,127 +58,41 @@ const AddProduct = () => {
       navigate("/");
     } catch (error) {
       setError(error);
-      console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
   if (isLoading) return <p>Loading....</p>;
-  if (error) return <p>Error fetching, please try again later</p>;
-  // console.log(category, "inii category");
+  if (error) return <p>{error}</p>;
   return (
-    <>
-      <section
-        id="form-AddProduct"
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh" }}
-      >
-        <div className="container">
-          <h1>Add Product</h1>
-          <div className="card">
-            <div className="card-body">
-              <form action="process-add-product.php" method="POST">
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Product Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
-                    Description
-                  </label>
-                  <textarea
-                    className="form-control"
-                    id="description"
-                    name="description"
-                    value={description}
-                    onChange={(e) => {
-                      setDescription(e.target.value);
-                    }}
-                  ></textarea>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="price" className="form-label">
-                    Price
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="price"
-                    name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="stock" className="form-label">
-                    Stock
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="stock"
-                    name="stock"
-                    value={stock}
-                    onChange={(e) => setStock(e.target.value)}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="imgUrl" className="form-label">
-                    Image URL
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="imgUrl"
-                    name="imgUrl"
-                    value={imgUrl}
-                    onChange={(e) => setImgUrl(e.target.value)}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="categoryId" className="form-label">
-                    Category
-                  </label>
-                  <select
-                    name="categoryId"
-                    className="form-control"
-                    id="categoryId"
-                    onChange={(e) => {
-                      setCategoryId(e.target.value);
-                    }}
-                  >
-                    {category.map((el) => {
-                      console.log(el.id);
-                      return (
-                        <option key={el.id} value={el.id}>
-                          {el.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <button
-                  onClick={handleSubmit}
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  Add Product
-                </button>
-              </form>
-            </div>
+    <section
+      className="d-flex justify-content-center align-items-center vh-100"
+      style={{ backgroundColor: "#f8f9fa", color: "#495057" }}
+    >
+      <div className="container">
+        <h1 className="text-center mb-4">Add Product</h1>
+        <div className="card">
+          <div className="card-body">
+            <Form
+              name={name}
+              description={description}
+              price={price}
+              stock={stock}
+              imgUrl={imgUrl}
+              categoryId={categoryId}
+              category={category}
+              setName={setName}
+              setDescription={setDescription}
+              setPrice={setPrice}
+              setStock={setStock}
+              setImgUrl={setImgUrl}
+              setCategoryId={setCategoryId}
+              handleSubmit={handleSubmit}
+            />
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

@@ -4,67 +4,62 @@ import AddProduct from "../../views/FormAddProduct";
 import Login from "../../views/login";
 import AddUser from "../../views/AddUser";
 import CategoryHome from "../../views/CategoryTable";
-import Detail from "../../views/Detail";
+
 import EditProduct from "../../views/FormEditProduct";
+import EditImage from "../../views/EditImagePage";
+
 const router = createBrowserRouter([
   {
-    // //  hidupin ini kalau sudah ada tombol logout
+    path: "*",
     loader: () => {
-      // harus me-return sesuatu kalau gak null
-      // navigation guard
-      // apa tanda dia belum login
       const access_token = localStorage.getItem("access_token");
-      // cek access token
       if (access_token) {
         return redirect("/");
       }
-      //  kalau access token ada return null artinya lanjutkan
+      return null;
+    },
+  },
+  {
+    loader: () => {
+      const access_token = localStorage.getItem("access_token");
+      if (access_token) {
+        return redirect("/");
+      }
       return null;
     },
     path: "/login",
     element: <Login />,
   },
   {
-    loader: () => {
-      // harus me-return sesuatu kalau gak null
-      // navigation guard
-      // apa tanda dia belum login
+    loader: ({ navigate }) => {
       const access_token = localStorage.getItem("access_token");
-      // cek access token
       if (!access_token) {
-        return redirect("/login");
+        navigate("/login");
       }
-      //  kalau access token ada return null artinya lanjutkan
       return null;
     },
   },
   {
-    //read Product
     path: "/",
     element: <HomeCms />,
   },
   {
-    //  nambahkan product
-    path: "/",
+    path: "/addProduct",
     element: <AddProduct />,
   },
   {
     path: "/:productId",
-    element: <Detail />,
-  },
-  {
-    path: "/:productId/editProduct",
     element: <EditProduct />,
   },
-
   {
-    //  nambahkan staff
+    path: "/:productId/editImage",
+    element: <EditImage />,
+  },
+  {
     path: "/add-user",
     element: <AddUser />,
   },
-
   {
-    //  read Product
     path: "/category",
     element: <CategoryHome />,
   },

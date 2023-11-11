@@ -23,7 +23,7 @@ const Login = () => {
       //   console.log(data);
       //   dapatkan access_token
       // simpan dalam localstorage
-
+      console.log("behasil login");
       localStorage.setItem("access_token", data.access_token);
       navigate("/");
       // Handle the login success here, e.g., store the user's token and redirect.
