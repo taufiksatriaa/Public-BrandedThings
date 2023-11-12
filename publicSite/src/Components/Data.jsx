@@ -7,7 +7,7 @@ const [isLoading, setIsLoading] = useState(true);
 const [error, SetError] = useState(null);
 const [data, setData] = useState([]);
 // fetch on mounted
-const product_server_url = "https://phase2-aio.vercel.app";
+const product_server_url = "";
 // function
 const brandedThings = axios.create({
   baseURL: product_server_url,

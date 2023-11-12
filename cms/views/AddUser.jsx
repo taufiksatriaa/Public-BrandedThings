@@ -27,7 +27,7 @@ const AddUser = () => {
           address,
         },
         {
-          headers: {
+          headers: { 
             Authorization: `Bearer ${access_token}`,
           },
         }
