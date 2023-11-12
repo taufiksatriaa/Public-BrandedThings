@@ -93,6 +93,7 @@ const Form = ({
             id="categoryId"
             onChange={(e) => setCategoryId(e.target.value)}
           >
+            <option>Select Category</option>
             {category.map((el) => (
               <option key={el.id} value={el.id}>
                 {el.name}
