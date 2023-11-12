@@ -8,11 +8,11 @@ const CategoryHome = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const access_token = localStorage.getItem("access_token");
   //   const navigate = useNavigate();
   useEffect(() => {
     async function fetchCategory() {
       try {
-        const access_token = localStorage.getItem("access_token");
         setIsLoading(true);
 
         let data = await axios.get(`${urlName}category`, {
@@ -29,11 +29,52 @@ const CategoryHome = () => {
     }
     fetchCategory();
   }, []);
+
+  // const handleAddCategory = async () => {
+  //   // console.log(id);
+  //   // console.log("heheh");
+  //   try {
+  //     await axios.post(
+  //       `${urlName}category`,
+  //       { name: "Smart Watch" },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${access_token}`,
+  //         },
+  //       }
+  //     );
+
+  //     console.log("berhasil nambahi");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const handleDeleteCategory = async (id) => {
+  //   console.log(id);
+  //   console.log("heheh");
+  //   try {
+  //     await axios.delete(
+  //       `${urlName}category/${id}`,
+
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${access_token}`,
+  //         },
+  //       }
+  //     );
+
+  //     console.log("berhasil delete");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   if (isLoading) return <p>Loading....</p>;
   if (error) return <p>Error fetching, please try again later</p>;
   return (
     <>
       <Navbar />
+      {/* <button onClick={() => handleAddCategory()}>add Category</button> */}
       <div className="container mt-4">
         <div className="d-flex justify-content-center">
           <h1>Categories</h1>
