@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../views/Home";
 import DetailProduct from "../views/DetailProduct";
 const router = createBrowserRouter([
+  { path: "/", element: <Home /> },
   {
     path: "/pub/product",
     element: <Home />,
