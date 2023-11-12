@@ -1,10 +1,10 @@
+import axios from "axios";
 import Pagination from "../src/Components/Pagination";
 import Card from "../src/Components/Card";
 import Navbar from "../src/Components/Navbar";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { urlName } from "../../cms/src/static";
+// import { useNavigate } from "react-router-dom";
+// import { urlName } from "../../cms/src/static";
 const Home = () => {
   const Branded_Things_Url = "https://server.taufik.xyz/";
   const BrandedApi = axios.create({
