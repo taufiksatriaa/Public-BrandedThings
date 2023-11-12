@@ -8,7 +8,7 @@ const Navbar = () => {
     // Lakukan sesuatu, misalnya menghapus token dari local storage
     localStorage.removeItem("access_token");
     // Redirect ke halaman login atau halaman lain sesuai kebutuhan
-    navigate("/login");
+    navigate("/");
   };
 
   return (

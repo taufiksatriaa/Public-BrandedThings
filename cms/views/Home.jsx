@@ -62,7 +62,7 @@ const HomeCms = () => {
       });
       setData(data.product);
       // console.log("berhasil hapus");
-      navigate("/");
+      navigate("/product");
     } catch (error) {
       console.log(error);
       setError(error);

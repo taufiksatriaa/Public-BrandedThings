@@ -27,13 +27,12 @@ const AddUser = () => {
           address,
         },
         {
-          headers: { 
+          headers: {
             Authorization: `Bearer ${access_token}`,
           },
         }
       );
-
-      navigate(`/`);
+      navigate("/product");
     } catch (error) {
       setError(error);
       console.log(error.message);

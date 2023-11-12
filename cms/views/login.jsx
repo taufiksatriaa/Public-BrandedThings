@@ -27,7 +27,7 @@ const Login = () => {
       // simpan dalam localstorage
       // console.log("behasil login");
       localStorage.setItem("access_token", data.access_token);
-      navigate("/");
+      navigate("/product");
       // Handle the login success here, e.g., store the user's token and redirect.
     } catch (error) {
       //   console.log(error.data.message);

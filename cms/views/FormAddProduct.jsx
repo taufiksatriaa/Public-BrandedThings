@@ -56,8 +56,8 @@ const AddProduct = () => {
           },
         }
       );
-      console.log("berhasil nambahiii");
-      navigate("/");
+      // console.log("berhasil nambahiii");
+      navigate("/product");
     } catch (error) {
       setError(error);
     } finally {

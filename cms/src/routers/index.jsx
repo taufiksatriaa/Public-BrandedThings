@@ -22,12 +22,12 @@ const router = createBrowserRouter([
       return null;
     },
   },
-  { path: "/login", element: <Login /> },
+  // { path: "/login", element: <Login /> },
   {
     loader: ({ navigate }) => {
       const access_token = localStorage.getItem("access_token");
       if (!access_token) {
-        navigate("/login");
+        navigate("/");
       }
       return null;
     },

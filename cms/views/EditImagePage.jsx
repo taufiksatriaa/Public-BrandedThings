@@ -29,7 +29,7 @@ const EditImage = () => {
           },
         }
       );
-      navigate("/");
+      navigate("/product");
     } catch (error) {
       console.log(error);
     } finally {
