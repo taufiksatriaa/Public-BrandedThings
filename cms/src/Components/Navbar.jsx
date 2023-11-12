@@ -19,7 +19,7 @@ const Navbar = () => {
         </div>
         <nav className="navbar navbar-expand-lg navbar-light bg-secondary">
           <div className="container-fluid">
-            <Link to={"/"} className="navbar-brand">
+            <Link to={"/product"} className="navbar-brand">
               EraSmartPhonelah
             </Link>
             <button
