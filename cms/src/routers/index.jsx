@@ -10,14 +10,8 @@ import EditImage from "../../views/EditImagePage";
 
 const router = createBrowserRouter([
   {
-    path: "*",
-    loader: () => {
-      const access_token = localStorage.getItem("access_token");
-      if (access_token) {
-        return redirect("/");
-      }
-      return null;
-    },
+    path: "/",
+    element: <Login />,
   },
   {
     loader: () => {
